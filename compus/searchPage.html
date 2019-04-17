@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell span.mui-icon-plus-filled{
+				color: green;
+				margin-top:10px ;
+				margin-right: 8px;
+				margin-left: -5px;
+			}
+			
+			.mui-table-view-cell span.mui-icon-minus-filled{
+				color: red;
+				
+				margin-top:10px ;
+				margin-right: 8px;
+				margin-left: -5px;
+			}
+			.mui-table-view-cell span.mui-icon-trash{
+			   margin-top: 5px;
+			   margin-right:-50px;	
+			}
+			
+			.mui-table-view-cell span:nth-of-type(3){
+			   width: 70px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script src="js/serverPath.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh:{
+					container:'#refresh',
+					down:{						
+						callback:pullrefresh
+					}
+				}
+			});
+			var keyword;
+			mui.plusReady(function(){
+				var mainview=plus.webview.currentWebview();
+				keyword=mainview.keyword;
+				
+				pullrefresh();
+				
+				window.addEventListener("listfresh",function(){
+					mui("#refresh").pullRefresh()._pulldownLoading();  
+				});
+				
+				mui("#ul").on("tap","a",function(){
+					var a=this;
+					var id=a.getAttribute("rowid");				
+					var info={
+						id:id,
+					}				
+					mui.openWindow({
+						url:"detail.html",
+						id:"detail.html",
+						extras:{
+							row:info
+						}
+					});
+					
+				});
+				
+			});
+			
+			function pullrefresh()
+			{
+				var url=server+"/Account/infoKeySearch";
+				mui.ajax(url,{
+					dataType:'json',
+					data:{
+						keyword:keyword
+					},
+					type:'post',
+					timeout:5000,
+					success:function(data){
+						var dt=data.dt;
+						var ul=document.getElementById("ul");
+						ul.innerHTML="";
+						
+						for(var i=0;i<dt.length;i++)
+						{
+							var row=dt[i];
+							
+							var four;
+							if(row.catID==1){
+								four="通知公告";
+							}else if(row.catID==2){
+								four="学术信息";
+							}else if(row.catID==3){
+								four="专业竞赛";
+							}else{
+								four="活动拓展";
+							}
+							
+							 var rank;
+							 if(row.rankID==1){
+							 	rank="河南大学";
+							 }
+							 
+							 var org;
+							 if(row.orgID==1){
+							 	org="软件学院";
+							 }
+							
+							var str='<li class="mui-table-view-cell mui-media">'+
+							        '<a rowid="'+row.ID+'">'+     //记账信息的ID号
+									'<img class="mui-media-object mui-pull-left" src="img/person.png" style="height: 84px; max-width: 84px;">'+
+									'<div class="mui-media-body" style="font-size: 12px;">'+
+									row.title+
+									'<p class="mui-ellipsis">'+four+'</p>'+
+									'<span>'+rank+'|'+org+'</span>'+
+									'<p>'+row.date+'</p>'+
+									'</div></a></li>';
+									
+							ul.innerHTML+=str;
+						}
+					},
+					error:function(){
+						mui.toast("服务访问出现错误！");
+						
+					}
+				});
+				
+				
+			}
+		</script>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">要找的...</h1>
+		</header>
+		
+		<div id="refresh" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <ul id="ul" class="mui-table-view mui-table-view-chevron ">
+		       
+		    </ul>
+		  </div>
+		</div>
+	</body>
+
+</html>

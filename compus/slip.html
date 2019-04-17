@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			mui.plusReady(function(){
+				var mainView=plus.webview.currentWebview();
+				var admin=mainView.admin;
+				document.getElementById("exitBtn").addEventListener("tap",function(){
+					var main=plus.webview.currentWebview().opener();
+					mui.fire(main,"closewin");
+				});
+				
+				document.getElementById("c1").addEventListener("tap",function(){
+					var main=plus.webview.currentWebview().opener();
+					mui.fire(main,"closewin",{
+						type:document.getElementById("c1").innerText
+					});
+				});
+				
+				document.getElementById("c2").addEventListener("tap",function(){
+					var main=plus.webview.currentWebview().opener();
+					mui.fire(main,"closewin",{
+						type:document.getElementById("c2").innerText
+					});
+				});
+				
+				document.getElementById("c3").addEventListener("tap",function(){
+					var main=plus.webview.currentWebview().opener();
+					mui.fire(main,"closewin",{
+						type:document.getElementById("c3").innerText
+					});
+				});
+				
+				document.getElementById("c4").addEventListener("tap",function(){
+					var main=plus.webview.currentWebview().opener();
+					mui.fire(main,"closewin",{
+						type:document.getElementById("c4").innerText
+					});
+				});
+				
+				document.getElementById("person").addEventListener("tap",function(){
+					var main=plus.webview.currentWebview().opener();
+					mui.fire(main,"closewin");
+					
+					mui.openWindow({
+						url:'person.html',
+						id:'person.html',
+						extras:{
+							admin:admin
+						}
+					})
+				});
+			});
+		</script>
+		<header class="mui-bar mui-bar-nav" style="background: #222222;">
+		    <h1 class="mui-title" style="color: #DDDDDD;">设置</h1>
+		</header>
+		<div class="mui-content">
+			<button id="person" type="button" class="mui-btn mui-btn-green mui-btn-block">个人中心</button>
+		    <button id="exitBtn" type="button" class="mui-btn mui-btn-red mui-btn-block">返回</button>
+		    
+		    <div class="mui-card">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">更多</a>
+						<div class="mui-collapse-content">
+							<form class="mui-input-group">
+								<div class="mui-button-row">
+									<button class="mui-btn mui-btn-primary" type="button" id="c1" style="width:300px ;">通知公告</button>
+								</div>
+								<div class="mui-button-row">
+									<button class="mui-btn mui-btn-primary" type="button" id="c2" style="width:300px ;">学术信息</button>
+								</div>
+		
+								<div class="mui-button-row ">
+									<button class="mui-btn mui-btn-primary" type="button" id="c3" style="width:300px ;">专业竞赛</button>
+								</div>
+								<div class="mui-button-row">
+									<button class="mui-btn mui-btn-primary" type="button" id="c4" style="width:300px ;">活动拓展</button>
+								</div>
+							</form>
+						</div>
+					</li>
+			</div>
+		</div>
+	</body>
+
+</html>

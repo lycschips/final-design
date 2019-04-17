@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*修改下拉刷新子页面默认top值*/
+			.mui-bar-nav ~ .mui-content .mui-pull-top-pocket{ 
+			  top: 90px !important; 
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script src="js/serverPath.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				subpages:[{
+					url:"list.html",
+					id:"list.html",
+					styles:{
+						top:'90px',
+						bottom:'0px'
+					},
+				}]
+			});
+			var slipMenu;
+			var mask;
+			mui.plusReady(function(){
+				//admin=plus.webview.currentWebview().admin;
+				
+				var mainview=plus.webview.currentWebview();	
+				var admin=mainview.admin;
+
+				//侧滑菜单
+				slipMenu=mui.preload({
+					url:"slip.html",
+					id:"slip.html",
+					styles:{
+						width:'70%',
+						left:'0%',
+						zindex:9997
+					},
+					extras:{
+						admin:admin
+					}
+				})
+				var type;
+				
+				document.getElementById("bars").addEventListener("tap",function(){
+					OpenMenu();
+				});
+				
+				window.addEventListener("closewin",function(event){
+					type=event.detail.type;
+					closeMenu();
+					
+					var webview=plus.webview.getWebviewById("list.html");
+					mui.fire(webview,"typeRufresh",{
+						type:type
+					});
+				});
+				
+				function OpenMenu(){
+					slipMenu.show('none',0,function(){
+						slipMenu.setStyle({
+							left:'0',
+							transition:{
+								duration:200
+							}
+						});
+					});
+				}
+				
+				function closeMenu(){
+					slipMenu.setStyle({
+						left:'-70%',
+						transition:{
+							duration:200
+						}
+					});
+					setTimeout(function(){
+						slipMenu.hide();
+					},220);
+				}
+				
+				
+			});
+			
+			function enterSearch(e) {
+    				if(e.keyCode == 13) {
+        				var s=document.getElementById("search").value;
+        				mui.openWindow({
+            				id: 'searchPage.html',
+            				url: 'searchPage.html',
+            				extras: {
+                				keyword:s
+            				}
+        				});
+    				}
+				}
+			
+		</script>
+		<header class="mui-bar mui-bar-nav" style="background: #222222; color: #DDDDDD;">
+			<span id="bars" class="mui-icon mui-icon-bars"></span>
+		    <h1 class="mui-title" style="color: #DDDDDD;" id="tittle">首页</h1>
+		</header>
+		<div class="mui-content">
+		    <div class="mui-input-group">
+		    	<div class="mui-input-row">
+		    		<div class="mui-input-row mui-search">
+		    		    <input id="search" type="search" onkeyup="enterSearch(event)" class="mui-input-clear" placeholder="活动名称">
+		    		</div>
+		    	</div>
+		    </div>
+		</div>
+		
+		
+	</body>
+
+</html>

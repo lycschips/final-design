@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/serverPath.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var mainView=plus.webview.currentWebview();
+				var id=mainView.row.id;
+				var urlId=mainView.row.url;
+				
+				document.addEventListener( "plusready", onPlusReady, false );
+				// 扩展API加载完毕，现在可以正常调用扩展API
+				function onPlusReady() {
+				}			
+				
+				document.getElementById("openUrl").addEventListener("tap",function(){
+					readContent();
+				});
+				
+				function readContent(){
+					plus.runtime.openURL(urlId, function(){
+						mui.alert("未知错误");
+					});
+				}
+				
+				var url=server+"/Account/infoSearch";
+				mui.ajax(url,{
+					type:"post",
+					data:{
+						id:id
+					},
+					dataType:"json",
+					timeout:5000,
+					success:function(data){
+						var dt=data.dt;
+						var rank;
+							 if(dt[0].rankID==1){
+							 	rank="河南大学";
+							 }
+							 
+							 var org;
+							 if(dt[0].orgID==1){
+							 	org="软件学院";
+							 }
+						document.getElementById("content").innerText=dt[0].detail;
+						document.getElementById("tittle").innerText=dt[0].title;
+						document.getElementById("time").innerText="发布时间:";
+						document.getElementById("time").innerText+=dt[0].date;
+						document.getElementById("rank").innerText=rank+"|"+org;
+					},
+					error:function(){
+						mui.toast("网络错误");
+					}
+				});
+				
+				document.getElementById("collect").addEventListener("tap",function(){
+					var url=server+"/Account/infoCollect";
+					mui.ajax(url,{
+						type:"post",
+						data:{
+							id:id
+						},
+						dataType:"json",
+						timeout:5000,
+						success:function(){
+							mui.alert("收藏成功！");
+						},
+						error:function(){
+							
+						}
+					})
+				});
+			});
+			
+			document.addEventListener("plusready",onPlusReady,false);
+			function onPlusReady(){}
+			
+			function readContent(){
+				var url="http://www.baidu.com";
+				plus.runtime.openURL(url, function(){});
+			};
+		</script>
+		<header class="mui-bar mui-bar-nav" style="background-color: #DDDDDD;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title" >活动内容</h1>
+		</header>
+		<div class="mui-content">
+		    
+		    
+		    <ul class="mui-table-view">
+		        <li class="mui-table-view-cell mui-media">
+		            <div class="mui-media-body" style="line-height: 35px;">
+		            <span id="tittle" style="margin-left: 30px; font-size: 24px;"></span>
+		            </div>
+		            <span id="time"></span>
+		            <p id="rank"></p>
+		        </li>
+		    </ul>
+		    
+		    <textarea rows="30"style="margin-top: 20px;" id="content">
+		    </textarea>
+		    
+		    <nav class="mui-bar mui-bar-tab">
+		        <a class="mui-tab-item" id="collect">
+		            <span class="mui-icon mui-icon-star"></span>
+		            <span class="mui-tab-label">收藏</span>
+		        </a>
+		        
+		        <a class="mui-tab-item" id="openUrl">
+		            <span class="mui-icon mui-icon-eye"></span>
+		            <span class="mui-tab-label">查看原文</span>
+		        </a>
+		    </nav>
+		    
+		</div>
+	</body>
+
+</html>

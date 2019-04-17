@@ -1,0 +1,117 @@
+{
+  "index.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "login.html": {
+    "resources": [
+      "js/serverPath.js",
+      "fonts/mui.ttf",
+      "img/logo.png",
+      "js/mui.js",
+      "css/mui.css",
+      "img/person.png",
+      "img/qqq.png"
+    ],
+    "refer": [
+      "Main.html"
+    ]
+  },
+  "Main.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "list.html",
+      "js/serverPath.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "list.html",
+      "slip.html",
+      "searchPage.html"
+    ]
+  },
+  "list.html": {
+    "resources": [
+      "js/serverPath.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "img/logo.png",
+      "img/person.png"
+    ],
+    "refer": [
+      "detail.html"
+    ]
+  },
+  "detail.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/serverPath.js"
+    ],
+    "refer": []
+  },
+  "slip.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "person.html"
+    ]
+  },
+  "person.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "img/logo.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "img/person.png",
+      "js/serverPath.js",
+      "img/www.png",
+      "img/eee.png"
+    ],
+    "refer": [
+      "collect.html"
+    ]
+  },
+  "collect.html": {
+    "resources": [
+      "js/serverPath.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "img/logo.png",
+      "fonts/mui.ttf",
+      "img/person.png"
+    ],
+    "refer": [
+      "detail.html",
+      "collectDetail.html"
+    ]
+  },
+  "collectDetail.html": {
+    "resources": [
+      "js/serverPath.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "searchPage.html": {
+    "resources": [
+      "js/serverPath.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "img/logo.png",
+      "img/person.png"
+    ]
+  }
+}
